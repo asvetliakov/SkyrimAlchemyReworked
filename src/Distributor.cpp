@@ -464,6 +464,10 @@ void AlchmeyDistributor::Initialize() {
             // TODO: make conf option for this
             uncommonIngredients.push_back(ingredientItem);
             keyword = uncommonIngrKeyword;
+            if (config.GetIngrConfig().renameIngredients) {
+                ingredientItem->fullName = BSFixedString(std::string(ingredientItem->fullName.c_str()) + " " +
+                                                         config.GetIngrConfig().uncommonSuffix);
+            }
         }
 
         if (keyword) {
