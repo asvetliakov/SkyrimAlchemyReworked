@@ -19,3 +19,9 @@ perks:
   allQuality: Skyrim.esm|5821D
   # Perk to increase produced potions & poisons by +1 (not exist in vanilla game but perks overhaul often adds it)
   doubleItems:
+
+ingredients:
+  addRaritySuffix: true
+  commonSuffix: (Common)
+  uncommonSuffix: (Uncommon)
+  rareSuffix: (Rare)

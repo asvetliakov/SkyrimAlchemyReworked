@@ -35,6 +35,44 @@ private:
     friend class articuno::access;
 };
 
+class IngredientsConfig {
+public:
+    bool renameIngredients = true;
+    std::string commonSuffix = "(Common)";
+    std::string uncommonSuffix = "(Uncommon)";
+    std::string rareSuffix = "(Rare)";
+
+private:
+    articuno_serialize(ar) {
+        ar <=> articuno::kv(renameIngredients, "addRaritySuffix");
+        ar <=> articuno::kv(commonSuffix, "commonSuffix");
+        ar <=> articuno::kv(uncommonSuffix, "uncommonSuffix");
+        ar <=> articuno::kv(rareSuffix, "rareSuffix");
+    }
+
+    articuno_deserialize(ar) {
+        *this = IngredientsConfig();
+        std::string _renameIngr;
+        std::string _commonSuffix;
+        std::string _uncommonSuffix;
+        std::string _rareSuffix;
+
+        if (ar <=> articuno::kv(_renameIngr, "addRarirySuffix")) {
+            renameIngredients = _renameIngr == "true" || _renameIngr == "1";
+        }
+        if (ar <=> articuno::kv(_commonSuffix, "commonSuffix")) {
+            commonSuffix = _commonSuffix;
+        }
+        if (ar <=> articuno::kv(_uncommonSuffix, "uncommonSuffix")) {
+            uncommonSuffix = _uncommonSuffix;
+        }
+        if (ar <=> articuno::kv(_rareSuffix, "rareSuffix")) {
+            rareSuffix = _rareSuffix;
+        }
+    }
+    friend class articuno::access;
+};
+
 class PerksConfig {
 public:
     std::string level2Perk;
@@ -102,6 +140,7 @@ class Config {
 public:
     [[nodiscard]] inline const Debug& GetDebug() const noexcept { return _debug; }
     [[nodiscard]] inline const PerksConfig& GetPerksConfig() const noexcept { return _perks_config; }
+    [[nodiscard]] inline const IngredientsConfig& GetIngrConfig() const noexcept { return _ingr_config; }
 
     [[nodiscard]] static const Config& GetSingleton() noexcept;
 
@@ -109,10 +148,12 @@ private:
     articuno_serde(ar) {
         ar <=> articuno::kv(_debug, "debug");
         ar <=> articuno::kv(_perks_config, "perks");
+        ar <=> articuno::kv(_ingr_config, "ingredients");
     }
 
     Debug _debug;
     PerksConfig _perks_config;
+    IngredientsConfig _ingr_config;
 
     friend class articuno::access;
 };

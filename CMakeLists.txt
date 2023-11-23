@@ -6,7 +6,7 @@ message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 ########################################################################################################################
 project(
         AlchemyReworked
-        VERSION 1.0.0
+        VERSION 1.1.0
         DESCRIPTION "A sample SKSE plugin built with CommonLibSSE."
         LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)

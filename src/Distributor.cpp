@@ -441,12 +441,24 @@ void AlchmeyDistributor::Initialize() {
         if (ingredientItem->HasKeyword(commonIngrKeyword)) {
             keyword = commonIngrKeyword;
             commonIngredients.push_back(ingredientItem);
+            if (config.GetIngrConfig().renameIngredients) {
+                ingredientItem->fullName = BSFixedString(std::string(ingredientItem->fullName.c_str()) + " " +
+                                                         config.GetIngrConfig().commonSuffix);
+            }
         } else if (ingredientItem->HasKeyword(uncommonIngrKeyword)) {
             keyword = uncommonIngrKeyword;
             uncommonIngredients.push_back(ingredientItem);
+            if (config.GetIngrConfig().renameIngredients) {
+                ingredientItem->fullName = BSFixedString(std::string(ingredientItem->fullName.c_str()) + " " +
+                                                         config.GetIngrConfig().uncommonSuffix);
+            }
         } else if (ingredientItem->HasKeyword(rareIngrKeyword)) {
             keyword = rareIngrKeyword;
             rareIngredients.push_back(ingredientItem);
+            if (config.GetIngrConfig().renameIngredients) {
+                ingredientItem->fullName = BSFixedString(std::string(ingredientItem->fullName.c_str()) + " " +
+                                                         config.GetIngrConfig().rareSuffix);
+            }
         } else {
             // Non-keyworded ingredients are uncommon
             // TODO: make conf option for this
