@@ -206,7 +206,7 @@ namespace {
                         ingr2Cond->data.comparisonValue.f = 1.0f;
                         ingr2Cond->data.functionData.function = FUNCTION_DATA::FunctionID::kGetItemCount;
                         ingr2Cond->data.flags.opCode = CONDITION_ITEM_DATA::OpCode::kGreaterThanOrEqualTo;
-                        ingr2Cond->data.flags.isOR = true;
+                        // ingr2Cond->data.flags.isOR = true;
                         ingr2Cond->data.functionData.params[0] = ingr2;
 
                         auto playerCond = new TESConditionItem;
