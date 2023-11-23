@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Exit-9B/CraftingCategories/main/docs/CraftingCategories.schema.json",
+  "sections": {
+    "Novice": {
+      "priority": 1,
+      "keywords": ["AlchemyLevel1"],
+      "icon": {
+        "source": "AIT/Aura/icons.swf",
+        "label": "misc_mortar"
+      }
+    },
+    "Apprentice": {
+      "priority": 2,
+      "keywords": ["AlchemyLevel2"],
+      "icon": {
+        "source": "SkyUI/icons_item_psychosteve.swf",
+        "label": "default_potion"
+      }
+    },
+    "Adept": {
+      "priority": 3,
+      "keywords": ["AlchemyLevel3"],
+      "icon": {
+        "source": "AIT/MoreIcons/icons.swf",
+        "label": "misc_flask"
+      }
+    },
+    "Expert": {
+      "priority": 4,
+      "keywords": ["AlchemyLevel4"],
+      "icon": {
+        "source": "SkyUI/icons_item_psychosteve.swf",
+        "label": "potion_fire"
+      }
+    },
+    "Master": {
+      "priority": 5,
+      "keywords": ["AlchemyLevel5"],
+      "icon": {
+        "source": "AIT/MoreIcons/icons.swf",
+        "label": "misc_drug"
+      }
+    }
+  }
+}

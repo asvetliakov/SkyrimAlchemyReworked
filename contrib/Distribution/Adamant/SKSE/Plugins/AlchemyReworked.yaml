@@ -1,0 +1,21 @@
+debug:
+  logLevel: info
+  flushLevel: trace
+
+perks:
+  # Perk to enable apprentice quality potions
+  level2: Skyrim.esm|BE127
+  # Perk to enable adept quality potions
+  level3: Skyrim.esm|C07CA
+  # Perk to enable expert quality potions
+  level4: Skyrim.esm|0C07CB
+  # Perk to enable master quality potions
+  level5: Skyrim.esm|C07CC
+  # Perk to make potions +1 quality
+  potionQuality: Skyrim.esm|58216
+  # Perk to make poisons +1 quality
+  poisonQuality: Adamant.esp|DA3D2
+  # Perk to make both potions & poisons +1 quality
+  allQuality: AlchemyReworked - Adamant Patch.esp|A01
+  # Perk to increase produced potions & poisons by +1 (not exist in vanilla game but perks overhaul often adds it)
+  doubleItems: Adamant.esp|DA3D3
