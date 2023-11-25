@@ -25,3 +25,17 @@ ingredients:
   commonSuffix: (Common)
   uncommonSuffix: (Uncommon)
   rareSuffix: (Rare)
+
+crafting:
+  # Ingredient rarity pair for novice potions
+  level1: common|common
+  # Ingredient rarity pair for apprentice potions
+  level2: common|uncommon
+  # Ingredient rarity pair for adept potions
+  level3: common|rare
+  # Ingredient rarity pair for adept potions (alt)
+  level3Alt: uncommon|uncommon
+  # Ingredient rarity pair for expert potions
+  level4: uncommon|rare
+  # Ingredient rarity pair for master potions
+  level5: rare|rare

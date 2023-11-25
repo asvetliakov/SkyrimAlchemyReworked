@@ -35,9 +35,11 @@ namespace {
     inline std::map<EffectSetting*, EffectPotions> potionsByEffect = {};
     inline std::map<BGSConstructibleObject*, CobjMetadata> constructibleMetadata = {};
 
-    inline std::vector<IngredientItem*> commonIngredients = {};
-    inline std::vector<IngredientItem*> uncommonIngredients = {};
-    inline std::vector<IngredientItem*> rareIngredients = {};
+    typedef std::vector<IngredientItem*> IngredientArr;
+    inline IngredientArr commonIngredients = {};
+    inline IngredientArr uncommonIngredients = {};
+    inline IngredientArr rareIngredients = {};
+    inline IngredientArr emptyIngr = {};
 
     inline BGSPerk* level2Perk;
     inline BGSPerk* level3Perk;
@@ -85,6 +87,37 @@ namespace {
             return potions.level5;
         }
         return nullptr;
+    }
+
+    inline IngredientArr& GetIngredientListForLevel(std::string level, IngredientArr& commonIngr,
+                                                    IngredientArr& uncommonIngr, IngredientArr& rareIngr) {
+        if (level == "common") {
+            return commonIngr;
+        }
+        if (level == "uncommon") {
+            return uncommonIngr;
+        }
+        if (level == "rare") {
+            return rareIngr;
+        }
+        return emptyIngr;
+    }
+
+    inline std::pair<IngredientArr&, IngredientArr&> GetIngredientListForCrafting(std::string craftingDef,
+                                                                                  IngredientArr& commonIngr,
+                                                                                  IngredientArr& uncommonIngr,
+                                                                                  IngredientArr& rareIngr) {
+        int delimterIndex = craftingDef.find("|");
+        if (delimterIndex < 0) {
+            return std::make_pair(std::ref(emptyIngr), std::ref(emptyIngr));
+        }
+        auto firstStr = craftingDef.substr(0, delimterIndex);
+        auto secondStr = craftingDef.substr(delimterIndex + 1);
+
+        auto& firstArr = GetIngredientListForLevel(firstStr, commonIngr, uncommonIngr, rareIngr);
+        auto& secondArr = GetIngredientListForLevel(secondStr, commonIngr, uncommonIngr, rareIngr);
+
+        return std::make_pair(std::ref(firstArr), std::ref(secondArr));
     }
 
     inline AlchemyItem* GetHigherLevelPotion(EffectPotions& potions, int targetLevel) {
@@ -157,6 +190,9 @@ namespace {
 
     inline void CreateRecipes(std::vector<IngredientItem*>& first, std::vector<IngredientItem*>& second,
                               AlchemyItem* potion, int targetLevel, int potionMinLevel) {
+        if (!first.size() || !second.size()) {
+            return;
+        }
         // to avoid creating duplicate recipes when first = second, e.g. common + common
         std::set<unsigned int> createdForFormIds;
         const auto factory = IFormFactory::GetConcreteFormFactoryByType<BGSConstructibleObject>();
@@ -537,15 +573,15 @@ void AlchmeyDistributor::Initialize() {
             return false;
         };
 
-        std::vector<IngredientItem*> effectCommonIngredients;
+        IngredientArr effectCommonIngredients;
         std::copy_if(commonIngredients.begin(), commonIngredients.end(), std::back_inserter(effectCommonIngredients),
                      filterEffect);
 
-        std::vector<IngredientItem*> effectUncommonIngredients;
+        IngredientArr effectUncommonIngredients;
         std::copy_if(uncommonIngredients.begin(), uncommonIngredients.end(),
                      std::back_inserter(effectUncommonIngredients), filterEffect);
 
-        std::vector<IngredientItem*> effectRareIngredients;
+        IngredientArr effectRareIngredients;
         std::copy_if(rareIngredients.begin(), rareIngredients.end(), std::back_inserter(effectRareIngredients),
                      filterEffect);
 
@@ -558,21 +594,34 @@ void AlchmeyDistributor::Initialize() {
         // rare + rare = level 5
 
         if (potions.level1) {
-            CreateRecipes(effectCommonIngredients, effectCommonIngredients, potions.level1, 1, 1);
+            auto lists = GetIngredientListForCrafting(config.GetCobjConfig().level1Recipe, effectCommonIngredients,
+                                                      effectUncommonIngredients, effectRareIngredients);
+            CreateRecipes(lists.first, lists.second, potions.level1, 1, 1);
         }
         if (potions.level2) {
-            CreateRecipes(effectCommonIngredients, effectUncommonIngredients, potions.level2, 2, 2);
+            auto lists = GetIngredientListForCrafting(config.GetCobjConfig().level2Recipe, effectCommonIngredients,
+                                                      effectUncommonIngredients, effectRareIngredients);
+            CreateRecipes(lists.first, lists.second, potions.level2, 2, 2);
         }
         if (potions.level3) {
-            CreateRecipes(effectCommonIngredients, effectRareIngredients, potions.level3, 3, 3);
+            auto lists = GetIngredientListForCrafting(config.GetCobjConfig().level3Recipe, effectCommonIngredients,
+                                                      effectUncommonIngredients, effectRareIngredients);
+            CreateRecipes(lists.first, lists.second, potions.level3, 3, 3);
             // alt
-            CreateRecipes(effectUncommonIngredients, effectUncommonIngredients, potions.level3, 3, 3);
+            auto listsAlt =
+                GetIngredientListForCrafting(config.GetCobjConfig().level3RecipeAlt, effectCommonIngredients,
+                                             effectUncommonIngredients, effectRareIngredients);
+            CreateRecipes(listsAlt.first, listsAlt.second, potions.level3, 3, 3);
         }
         if (potions.level4) {
-            CreateRecipes(effectUncommonIngredients, effectRareIngredients, potions.level4, 4, 4);
+            auto lists = GetIngredientListForCrafting(config.GetCobjConfig().level4Recipe, effectCommonIngredients,
+                                                      effectUncommonIngredients, effectRareIngredients);
+            CreateRecipes(lists.first, lists.second, potions.level4, 4, 4);
         }
         if (potions.level5) {
-            CreateRecipes(effectRareIngredients, effectRareIngredients, potions.level5, 5, 5);
+            auto lists = GetIngredientListForCrafting(config.GetCobjConfig().level5Recipe, effectCommonIngredients,
+                                                      effectUncommonIngredients, effectRareIngredients);
+            CreateRecipes(lists.first, lists.second, potions.level5, 5, 5);
         }
     }
 
