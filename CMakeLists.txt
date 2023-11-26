@@ -114,9 +114,7 @@ foreach (DEPLOY_TARGET $ENV{SkyrimPluginTargets})
             COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/Config/AlchemyReworked.yaml" "${DEPLOY_TARGET}/SKSE/Plugins/")
 
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/KID/AlchemyReworked_Apothecary_KID.ini" "${DEPLOY_TARGET}/")
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/KID/AlchemyReworked_Vanilla_KID.ini" "${DEPLOY_TARGET}/")
+            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/KID/AlchemyReworked_Main_KID.ini" "${DEPLOY_TARGET}/")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/contrib/Distribution/KID/AlchemyReworked_Mods_KID.ini" "${DEPLOY_TARGET}/")
 
