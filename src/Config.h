@@ -109,7 +109,7 @@ private:
         std::string _uncommonSuffix;
         std::string _rareSuffix;
 
-        if (ar <=> articuno::kv(_renameIngr, "addRarirySuffix")) {
+        if (ar <=> articuno::kv(_renameIngr, "addRaritySuffix")) {
             renameIngredients = _renameIngr == "true" || _renameIngr == "1";
         }
         if (ar <=> articuno::kv(_commonSuffix, "commonSuffix")) {
