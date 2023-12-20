@@ -1,0 +1,41 @@
+debug:
+  logLevel: info
+  flushLevel: trace
+
+perks:
+  # Perk to enable apprentice quality potions
+  level2: Skyrim.esm|BE127
+  # Perk to enable adept quality potions
+  level3: Skyrim.esm|C07CA
+  # Perk to enable expert quality potions
+  level4: Skyrim.esm|0C07CB
+  # Perk to enable master quality potions
+  level5: Skyrim.esm|C07CC
+  # Perk to make potions +1 quality
+  potionQuality: Skyrim.esm|58216
+  # Perk to make poisons +1 quality
+  poisonQuality: Skyrim.esm|58217
+  # Perk to make both potions & poisons +1 quality
+  allQuality: Skyrim.esm|5821D
+  # Perk to increase produced potions & poisons by +1 (not exist in vanilla game but perks overhaul often adds it)
+  doubleItems: Vanguard Path.esp|E9635
+
+ingredients:
+  addRaritySuffix: true
+  commonSuffix: (Common)
+  uncommonSuffix: (Uncommon)
+  rareSuffix: (Rare)
+
+crafting:
+  # Ingredient rarity pair for novice potions
+  level1: common|common
+  # Ingredient rarity pair for apprentice potions
+  level2: common|uncommon
+  # Ingredient rarity pair for adept potions
+  level3: common|rare
+  # Ingredient rarity pair for adept potions (alt)
+  level3Alt: uncommon|uncommon
+  # Ingredient rarity pair for expert potions
+  level4: uncommon|rare
+  # Ingredient rarity pair for master potions
+  level5: rare|rare
